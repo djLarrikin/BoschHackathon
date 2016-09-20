@@ -6,14 +6,14 @@ package edu.depaul.jmorton.boschhack.boschhackathon.models;
 
 public class TemperatureModel {
 
-    private long temp;
+    private long temperature;
 
-    public void setTemp(long temp) {
-        this.temp = temp;
+    public void setTemperature(long temperature) {
+        this.temperature = temperature;
     }
 
-    public long getTemp(long temp) {
-        return temp;
+    public long getTemp(long temperature) {
+        return temperature;
     }
 }
 
