@@ -5,4 +5,5 @@ package edu.depaul.jmorton.boschhack.boschhackathon.models;
  */
 
 public class TemperatureModel {
+
 }
