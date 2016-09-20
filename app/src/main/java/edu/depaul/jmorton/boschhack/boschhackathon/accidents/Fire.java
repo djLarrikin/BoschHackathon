@@ -1,6 +1,8 @@
 package edu.depaul.jmorton.boschhack.boschhackathon.accidents;
 
+import edu.depaul.jmorton.boschhack.boschhackathon.models.CarModel;
 import edu.depaul.jmorton.boschhack.boschhackathon.models.PersonModel;
+import edu.depaul.jmorton.boschhack.boschhackathon.models.TemperatureModel;
 
 /**
  * Created by Dina on 9/20/16.
@@ -9,16 +11,18 @@ import edu.depaul.jmorton.boschhack.boschhackathon.models.PersonModel;
 public class Fire extends DangerousAccidents {
     StringBuffer information = new StringBuffer();
     PersonModel person;
+    CarModel car;
+    TemperatureModel temperature;
 
 
-    public Fire(PersonModel person) {
+    public Fire(PersonModel person, CarModel car, TemperatureModel temperature) {
         this.person = person;
-        checkTemperature();
+        this.car = car;
+        checkTemperature(temperature);
     }
 
-    public void checkTemperature() {
-        int temperature = 55;
-        while (temperature < 55) {
+    public void checkTemperature(TemperatureModel temperature) {
+        while (temperature.getTemp() < 55) {
         } // dont do anything
         // temperature >= 55
         getInformation(information);
@@ -36,13 +40,13 @@ public class Fire extends DangerousAccidents {
         information.append(" Gender: " + person.getGender() + " Blood Type: " + person.getBloodType());
         information.append(" Extra Info: \n" + person.getExtraInfo());
 
-        /*
+
         information.append(" Car Information:\n");
         information.append(" Car Make: " + car.getBrand() + "\n");
         information.append(" Car Model: " + car.getModel() + "\n");
         information.append(" Car Color: " + car.getColor());
         information.append(" Licence Plate: " + car.getPlate()+ "\n");
-        */
+
     }
 
     public void text911(StringBuffer information) {

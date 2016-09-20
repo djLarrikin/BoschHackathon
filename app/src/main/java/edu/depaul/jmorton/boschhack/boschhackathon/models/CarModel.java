@@ -1,3 +1,5 @@
+package edu.depaul.jmorton.boschhack.boschhackathon.models;
+
 /**
  * Created by Ru Fang on 9/20/16.
  */
