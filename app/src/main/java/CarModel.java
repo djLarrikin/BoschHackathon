@@ -7,27 +7,28 @@ public class CarModel {
     private String model;
     private String color;
     private String plate;
+    private String driver;
 
     //  Constructor
-    public CarModel(String nPlate) {
+    public CarModel(String plate) {
 //        this.brand = nBrand;
 //        this.model = nModel;
 //        this.color = nColor;
 //        String nBrand, String nModel, String nColor
-        this.plate = nPlate;
+        this.plate = plate;
     }
 
     //  getters and setters
-    public void setBrand(String nBrand) {
-        this.brand = nBrand;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public void setModel(String nModel) {
-        this.model = nModel;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public void setColor(String nColor) {
-        this.color = nColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getBrand() {
@@ -45,5 +46,7 @@ public class CarModel {
     public String getPlate() {
         return this.plate;
     }
+
+    public String
 
 }
