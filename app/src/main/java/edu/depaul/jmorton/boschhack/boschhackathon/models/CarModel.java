@@ -1,3 +1,5 @@
+package edu.depaul.jmorton.boschhack.boschhackathon.models;
+
 /**
  * Created by Ru Fang on 9/20/16.
  */
@@ -47,6 +49,6 @@ public class CarModel {
         return this.plate;
     }
 
-    public String
+//    public String
 
 }
