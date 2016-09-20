@@ -11,7 +11,7 @@ public class PersonModel {
     private String lastName;
     private Date birthdate;
     private String bloodType;
-    private String gender;
+    private char gender;
     private String extraInfo;
 
     PersonModel emergencyContact;
@@ -39,7 +39,7 @@ public class PersonModel {
         return bloodType;
     }
 
-    public String getGender() {
+    public char getGender() {
         return gender;
     }
 
@@ -51,7 +51,7 @@ public class PersonModel {
         this.bloodType = bloodType;
     }
 
-    public void setGender(String gender) {
+    public void setGender(char gender) {
         this.gender = gender;
     }
 
