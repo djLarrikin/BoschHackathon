@@ -24,7 +24,7 @@ public class Rollover extends DangerousAccidents {
         while ((gyroscope.getAxisX() < 1.57) && (gyroscope.getAxisY() < 1.57) && (gyroscope.getAxisZ() < 1.57)) {
         }
         StringBuffer information = new StringBuffer();
-        infromation = getInformation();
+        information = getInformation();
         text911(information);
 
     }
