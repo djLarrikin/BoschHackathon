@@ -9,7 +9,7 @@ import edu.depaul.jmorton.boschhack.boschhackathon.models.TemperatureModel;
  */
 
 public class Fire extends DangerousAccidents {
-    StringBuffer information = new StringBuffer();
+
     PersonModel person;
     CarModel car;
     TemperatureModel temperature;
@@ -25,29 +25,31 @@ public class Fire extends DangerousAccidents {
         while (temperature.getTemperature() < 55) {
         } // dont do anything
         // temperature >= 55
+        StringBuffer information = new StringBuffer();
         information = getInformation();
         text911(information);
     }
 
     public StringBuffer getInformation() {
+        StringBuffer driverInfo = new StringBuffer();
 
-        information.append(" Accident Alert\n");
-        information.append(" GPS Location:\n");
-        information.append(" Link:\n");
+        driverInfo.append(" Accident Alert\n");
+        driverInfo.append(" GPS Location:\n");
+        driverInfo.append(" Link:\n");
 
-        information.append(" Driver Information:\n");
-        information.append(" Driver name: " + person.getFirstName() + " " + person.getLastName() + "\n");
-        information.append(" Gender: " + person.getGender() + " Blood Type: " + person.getBloodType());
-        information.append(" Extra Info: \n" + person.getExtraInfo());
+        driverInfo.append(" Driver Information:\n");
+        driverInfo.append(" Driver name: " + person.getFirstName() + " " + person.getLastName() + "\n");
+        driverInfo.append(" Gender: " + person.getGender() + " Blood Type: " + person.getBloodType());
+        driverInfo.append(" Extra Info: \n" + person.getExtraInfo());
 
 
-        information.append(" Car Information:\n");
-        information.append(" Car Make: " + car.getBrand() + "\n");
-        information.append(" Car Model: " + car.getModel() + "\n");
-        information.append(" Car Color: " + car.getColor());
-        information.append(" Licence Plate: " + car.getPlate()+ "\n");
+        driverInfo.append(" Car Information:\n");
+        driverInfo.append(" Car Make: " + car.getBrand() + "\n");
+        driverInfo.append(" Car Model: " + car.getModel() + "\n");
+        driverInfo.append(" Car Color: " + car.getColor());
+        driverInfo.append(" Licence Plate: " + car.getPlate() + "\n");
 
-        return information;
+        return driverInfo;
     }
 
     public void text911(StringBuffer information) {
