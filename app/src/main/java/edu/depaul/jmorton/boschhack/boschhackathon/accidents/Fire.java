@@ -22,14 +22,14 @@ public class Fire extends DangerousAccidents {
     }
 
     public void checkTemperature(TemperatureModel temperature) {
-        while (temperature.getTemp() < 55) {
+        while (temperature.getTemperature() < 55) {
         } // dont do anything
         // temperature >= 55
-        getInformation(information);
+        information = getInformation();
         text911(information);
     }
 
-    public void getInformation(StringBuffer information) {
+    public StringBuffer getInformation() {
 
         information.append(" Accident Alert\n");
         information.append(" GPS Location:\n");
@@ -47,6 +47,7 @@ public class Fire extends DangerousAccidents {
         information.append(" Car Color: " + car.getColor());
         information.append(" Licence Plate: " + car.getPlate()+ "\n");
 
+        return information;
     }
 
     public void text911(StringBuffer information) {
