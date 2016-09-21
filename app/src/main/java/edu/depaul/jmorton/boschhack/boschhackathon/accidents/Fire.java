@@ -10,16 +10,15 @@ import edu.depaul.jmorton.boschhack.boschhackathon.models.TemperatureModel;
 
 public class Fire extends DangerousAccidents {
 
+    TemperatureModel temperature;
     PersonModel person;
     CarModel car;
-    TemperatureModel temperature;
 
-
-    public Fire(PersonModel person, CarModel car, TemperatureModel temperature) {
-        this.person = person;
-        this.car = car;
+    public Fire(TemperatureModel temperature, PersonModel person, CarModel car) {
+        super(person, car);
         checkTemperature(temperature);
     }
+
 
     public void checkTemperature(TemperatureModel temperature) {
         while (temperature.getTemperature() < 55) {
@@ -30,29 +29,5 @@ public class Fire extends DangerousAccidents {
         text911(information);
     }
 
-    public StringBuffer getInformation() {
-        StringBuffer driverInfo = new StringBuffer();
 
-        driverInfo.append(" Accident Alert\n");
-        driverInfo.append(" GPS Location:\n");
-        driverInfo.append(" Link:\n");
-
-        driverInfo.append(" Driver Information:\n");
-        driverInfo.append(" Driver name: " + person.getFirstName() + " " + person.getLastName() + "\n");
-        driverInfo.append(" Gender: " + person.getGender() + " Blood Type: " + person.getBloodType());
-        driverInfo.append(" Extra Info: \n" + person.getExtraInfo());
-
-
-        driverInfo.append(" Car Information:\n");
-        driverInfo.append(" Car Make: " + car.getBrand() + "\n");
-        driverInfo.append(" Car Model: " + car.getModel() + "\n");
-        driverInfo.append(" Car Color: " + car.getColor());
-        driverInfo.append(" Licence Plate: " + car.getPlate() + "\n");
-
-        return driverInfo;
-    }
-
-    public void text911(StringBuffer information) {
-        // text information to 911
-    }
 }
