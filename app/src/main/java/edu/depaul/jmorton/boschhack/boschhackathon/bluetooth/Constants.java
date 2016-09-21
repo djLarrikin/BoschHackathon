@@ -18,20 +18,16 @@ package edu.depaul.jmorton.boschhack.boschhackathon.bluetooth;
 
 import android.os.ParcelUuid;
 
-/**
- * Constants for use in the Bluetooth Advertisements sample
- */
+
 public class Constants {
 
-    /**
-     * UUID identified with this app - set as Service UUID for BLE Advertisements.
-     * <p>
-     * Bluetooth requires a certain format for UUIDs associated with Services.
-     * The official specification can be found here:
-     * https://www.bluetooth.org/en-us/specification/assigned-numbers/service-discovery
-     */
     public static final ParcelUuid Service_UUID = ParcelUuid
-            .fromString("0000b81d-0000-1000-8000-00805f9b34fb");
+            .fromString("5d6c07bd-442a-4bdc-9881-f69c175a772a");
+
+    public static final String ACCIDENT_TYPE = "accident_type";
+    public static final String SAFE = "SAFE";
+    public static final String ACCIDENT_FIRE = "FIRE";
+    public static final String ACCIDENT_ROLLOVER = "ROLL";
 
     public static final int REQUEST_ENABLE_BT = 1;
 

@@ -39,4 +39,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    compile 'javax.inject:javax.inject:1'
 }

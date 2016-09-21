@@ -3,7 +3,6 @@ package edu.depaul.jmorton.boschhack.boschhackathon.services;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
-import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
@@ -38,7 +37,7 @@ public class AdvertiserService extends Service {
     public static final int ADVERTISING_TIMED_OUT = 6;
 
     private BluetoothLeAdvertiser bluetoothLeAdvertiser;
-    private AdvertiseCallback advertiseCallback;
+    private android.bluetooth.le.AdvertiseCallback advertiseCallback;
     private Handler handler;
     private Runnable timeoutRunnable;
 
@@ -51,7 +50,7 @@ public class AdvertiserService extends Service {
     public void onCreate() {
         running = true;
         initialize();
-        startAdvertising();
+        startAdvertising(Constants.SAFE);
         setTimeout();
         super.onCreate();
     }
@@ -118,13 +117,13 @@ public class AdvertiserService extends Service {
     /**
      * Starts BLE Advertising.
      */
-    private void startAdvertising() {
+    private void startAdvertising(String accidentType) {
         L.d("Service: Starting Advertising");
 
         if (advertiseCallback == null) {
             AdvertiseSettings settings = buildAdvertiseSettings();
-            AdvertiseData data = buildAdvertiseData();
-            advertiseCallback = new SampleAdvertiseCallback();
+            AdvertiseData data = buildAdvertiseData(accidentType);
+            advertiseCallback = new AdvertiseCallback();
 
             if (bluetoothLeAdvertiser != null) {
                 bluetoothLeAdvertiser.startAdvertising(settings, data,
@@ -147,7 +146,7 @@ public class AdvertiserService extends Service {
     /**
      * Returns an AdvertiseData object which includes the Service UUID and Device Name.
      */
-    private AdvertiseData buildAdvertiseData() {
+    private AdvertiseData buildAdvertiseData(String accident) {
 
         /**
          * Note: There is a strict limit of 31 Bytes on packets sent over BLE Advertisements.
@@ -159,8 +158,9 @@ public class AdvertiserService extends Service {
          */
 
         AdvertiseData.Builder dataBuilder = new AdvertiseData.Builder();
-        dataBuilder.addServiceUuid(Constants.Service_UUID);
         dataBuilder.setIncludeDeviceName(true);
+        dataBuilder.addServiceUuid(Constants.Service_UUID);
+        dataBuilder.addServiceData(Constants.Service_UUID, accident.getBytes());
 
         /* For example - this will cause advertising to fail (exceeds size limit) */
         //String failureData = "asdghkajsghalkxcjhfa;sghtalksjcfhalskfjhasldkjfhdskf";
@@ -175,7 +175,9 @@ public class AdvertiserService extends Service {
      */
     private AdvertiseSettings buildAdvertiseSettings() {
         AdvertiseSettings.Builder settingsBuilder = new AdvertiseSettings.Builder();
-        settingsBuilder.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_POWER);
+        settingsBuilder.setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY);
+        settingsBuilder.setConnectable(false);
+        settingsBuilder.setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH);
         settingsBuilder.setTimeout(0);
         return settingsBuilder.build();
     }
@@ -184,7 +186,7 @@ public class AdvertiserService extends Service {
      * Custom callback after Advertising succeeds or fails to start. Broadcasts the error code
      * in an Intent to be picked up by AdvertiserFragment and stops this Service.
      */
-    private class SampleAdvertiseCallback extends AdvertiseCallback {
+    private class AdvertiseCallback extends android.bluetooth.le.AdvertiseCallback {
 
         @Override
         public void onStartFailure(int errorCode) {
@@ -200,6 +202,10 @@ public class AdvertiserService extends Service {
         public void onStartSuccess(AdvertiseSettings settingsInEffect) {
             super.onStartSuccess(settingsInEffect);
             L.d("Advertising successfully started");
+        }
+
+        public AdvertiseCallback() {
+            super();
         }
     }
 
