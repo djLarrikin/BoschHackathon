@@ -12,7 +12,7 @@ public class TemperatureModel {
         this.temperature = temperature;
     }
 
-    public long getTemp(long temperature) {
+    public long getTemperature() {
         return temperature;
     }
 }

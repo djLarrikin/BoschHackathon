@@ -49,6 +49,5 @@ public class CarModel {
         return this.plate;
     }
 
-//    public String
 
 }

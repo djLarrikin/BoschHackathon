@@ -11,12 +11,7 @@ import android.view.ViewGroup;
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link XDKMainFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link XDKMainFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment representing the XDK, will advertise different accident events.
  */
 public class XDKMainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
