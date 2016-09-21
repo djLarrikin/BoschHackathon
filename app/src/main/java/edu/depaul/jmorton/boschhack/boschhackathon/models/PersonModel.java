@@ -16,8 +16,7 @@ public class PersonModel {
 
     PersonModel emergencyContact;
 
-
-    public void PersonModel(String firstName, String lastName, Date birthdate) {
+    public PersonModel(String firstName, String lastName, Date birthdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
@@ -31,7 +30,7 @@ public class PersonModel {
         return lastName;
     }
 
-    public Date getBirthdat() {
+    public Date getBirthdate() {
         return birthdate;
     }
 

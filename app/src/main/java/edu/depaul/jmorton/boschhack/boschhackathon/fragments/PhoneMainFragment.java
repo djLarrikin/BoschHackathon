@@ -10,13 +10,9 @@ import android.view.ViewGroup;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 
+
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PhoneMainFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link PhoneMainFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment representing the phone that will have GPS information and handle receiving advertisements.
  */
 public class PhoneMainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
