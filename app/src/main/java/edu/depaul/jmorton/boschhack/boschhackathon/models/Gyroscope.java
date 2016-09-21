@@ -5,11 +5,10 @@ package edu.depaul.jmorton.boschhack.boschhackathon.models;
  */
 
 public class Gyroscope {
-
+    //    In three axises is rate of rotation: rad/s
     private float axisX;
     private float axisY;
     private float axisZ;
-
     public Gyroscope() {
         this.axisX = 0;
         this.axisY = 0;
@@ -40,6 +39,15 @@ public class Gyroscope {
 
     public float getAxisZ() {
         return this.axisZ;
+    }
+
+    public float[] getGyroscope() {
+        float[] gyro = new float[3];
+        gyro[0] = getAxisX();
+        gyro[1] = getAxisY();
+        gyro[2] = getAxisZ();
+
+        return gyro;
     }
 }
 
