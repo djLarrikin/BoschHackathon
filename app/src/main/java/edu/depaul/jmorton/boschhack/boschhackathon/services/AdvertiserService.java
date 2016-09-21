@@ -11,13 +11,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 import edu.depaul.jmorton.boschhack.boschhackathon.bluetooth.Constants;
+import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
 
 /**
  * Manages BLE Advertising independent of the main app.
@@ -25,9 +25,6 @@ import edu.depaul.jmorton.boschhack.boschhackathon.bluetooth.Constants;
  * Service is maintaining the necessary Callback in memory.
  */
 public class AdvertiserService extends Service {
-
-    private static final String TAG = AdvertiserService.class.getSimpleName();
-
     /**
      * A global variable to let AdvertiserFragment check if the Service is running without needing
      * to start or bind to it.
@@ -36,19 +33,13 @@ public class AdvertiserService extends Service {
      */
     public static boolean running = false;
 
-    public static final String ADVERTISING_FAILED =
-            "com.example.android.bluetoothadvertisements.advertising_failed";
-
+    public static final String ADVERTISING_FAILED = L.TAG + ".advertising_failed";
     public static final String ADVERTISING_FAILED_EXTRA_CODE = "failureCode";
-
     public static final int ADVERTISING_TIMED_OUT = 6;
 
-    private BluetoothLeAdvertiser mBluetoothLeAdvertiser;
-
-    private AdvertiseCallback mAdvertiseCallback;
-
-    private Handler mHandler;
-
+    private BluetoothLeAdvertiser bluetoothLeAdvertiser;
+    private AdvertiseCallback advertiseCallback;
+    private Handler handler;
     private Runnable timeoutRunnable;
 
     /**
@@ -74,7 +65,7 @@ public class AdvertiserService extends Service {
          */
         running = false;
         stopAdvertising();
-        mHandler.removeCallbacks(timeoutRunnable);
+        handler.removeCallbacks(timeoutRunnable);
         super.onDestroy();
     }
 
@@ -91,12 +82,12 @@ public class AdvertiserService extends Service {
      * Get references to system Bluetooth objects if we don't have them already.
      */
     private void initialize() {
-        if (mBluetoothLeAdvertiser == null) {
-            BluetoothManager mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-            if (mBluetoothManager != null) {
-                BluetoothAdapter mBluetoothAdapter = mBluetoothManager.getAdapter();
+        if (bluetoothLeAdvertiser == null) {
+            BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+            if (bluetoothManager != null) {
+                BluetoothAdapter mBluetoothAdapter = bluetoothManager.getAdapter();
                 if (mBluetoothAdapter != null) {
-                    mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
+                    bluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
                 } else {
                     Toast.makeText(this, getString(R.string.bt_null), Toast.LENGTH_LONG).show();
                 }
@@ -112,32 +103,32 @@ public class AdvertiserService extends Service {
      * set amount of time.
      */
     private void setTimeout() {
-        mHandler = new Handler();
+        handler = new Handler();
         timeoutRunnable = new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "AdvertiserService has reached timeout of " + TIMEOUT + " milliseconds, stopping advertising.");
+                L.d("AdvertiserService has reached timeout of " + TIMEOUT + " milliseconds, stopping advertising.");
                 sendFailureIntent(ADVERTISING_TIMED_OUT);
                 stopSelf();
             }
         };
-        mHandler.postDelayed(timeoutRunnable, TIMEOUT);
+        handler.postDelayed(timeoutRunnable, TIMEOUT);
     }
 
     /**
      * Starts BLE Advertising.
      */
     private void startAdvertising() {
-        Log.d(TAG, "Service: Starting Advertising");
+        L.d("Service: Starting Advertising");
 
-        if (mAdvertiseCallback == null) {
+        if (advertiseCallback == null) {
             AdvertiseSettings settings = buildAdvertiseSettings();
             AdvertiseData data = buildAdvertiseData();
-            mAdvertiseCallback = new SampleAdvertiseCallback();
+            advertiseCallback = new SampleAdvertiseCallback();
 
-            if (mBluetoothLeAdvertiser != null) {
-                mBluetoothLeAdvertiser.startAdvertising(settings, data,
-                        mAdvertiseCallback);
+            if (bluetoothLeAdvertiser != null) {
+                bluetoothLeAdvertiser.startAdvertising(settings, data,
+                        advertiseCallback);
             }
         }
     }
@@ -146,10 +137,10 @@ public class AdvertiserService extends Service {
      * Stops BLE Advertising.
      */
     private void stopAdvertising() {
-        Log.d(TAG, "Service: Stopping Advertising");
-        if (mBluetoothLeAdvertiser != null) {
-            mBluetoothLeAdvertiser.stopAdvertising(mAdvertiseCallback);
-            mAdvertiseCallback = null;
+        L.d("Service: Stopping Advertising");
+        if (bluetoothLeAdvertiser != null) {
+            bluetoothLeAdvertiser.stopAdvertising(advertiseCallback);
+            advertiseCallback = null;
         }
     }
 
@@ -199,7 +190,7 @@ public class AdvertiserService extends Service {
         public void onStartFailure(int errorCode) {
             super.onStartFailure(errorCode);
 
-            Log.d(TAG, "Advertising failed");
+            L.d("Advertising failed");
             sendFailureIntent(errorCode);
             stopSelf();
 
@@ -208,7 +199,7 @@ public class AdvertiserService extends Service {
         @Override
         public void onStartSuccess(AdvertiseSettings settingsInEffect) {
             super.onStartSuccess(settingsInEffect);
-            Log.d(TAG, "Advertising successfully started");
+            L.d("Advertising successfully started");
         }
     }
 

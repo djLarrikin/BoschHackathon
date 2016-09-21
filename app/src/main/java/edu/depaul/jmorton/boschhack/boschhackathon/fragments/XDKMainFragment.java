@@ -1,7 +1,8 @@
 package edu.depaul.jmorton.boschhack.boschhackathon.fragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,69 +10,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
+import edu.depaul.jmorton.boschhack.boschhackathon.receivers.AdvertiseFailureReceiver;
+import edu.depaul.jmorton.boschhack.boschhackathon.services.AdvertiserService;
 
 /**
  * Fragment representing the XDK, will advertise different accident events.
  */
 public class XDKMainFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private AdvertiseFailureReceiver advertisingFailureReceiver;
 
     public XDKMainFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment XDKMainFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static XDKMainFragment newInstance(String param1, String param2) {
-        XDKMainFragment fragment = new XDKMainFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public static XDKMainFragment newInstance() {
+        return new XDKMainFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        advertisingFailureReceiver = new AdvertiseFailureReceiver();
+        startAdvertising();
     }
 
     @Override
@@ -82,23 +43,47 @@ public class XDKMainFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter failureFilter = new IntentFilter(AdvertiserService.ADVERTISING_FAILED);
+        getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
+        if (!AdvertiserService.running) {
+            startAdvertising();
+        }
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        stopAdvertising();
+        super.onDestroy();
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * Returns Intent addressed to the {@code AdvertiserService} class.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private static Intent getServiceIntent(Context c) {
+        return new Intent(c, AdvertiserService.class);
+    }
+
+    /**
+     * Starts BLE Advertising by starting {@code AdvertiserService}.
+     */
+    private void startAdvertising() {
+        Context c = getActivity();
+        c.startService(getServiceIntent(c));
+    }
+
+    /**
+     * Stops BLE Advertising by stopping {@code AdvertiserService}.
+     */
+    private void stopAdvertising() {
+        Context c = getActivity();
+        c.stopService(getServiceIntent(c));
     }
 }

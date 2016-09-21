@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class L {
 
-    public static final String TAG = "boschhackathon";
+    public static final String TAG = "depaul.boschhackathon";
 
     private static boolean ENABLE_DEBUG_LOGGING = false;
 
