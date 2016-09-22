@@ -89,7 +89,7 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
                 if (fire.isThereFire()) {
                     stopAdvertising();
                     accident = Constants.ACCIDENT_FIRE;
-                    sendSMS("2025940521", "FIRE IN JOHN DOES CAR PLATE: FRESH");
+                    //sendSMS("", "FIRE IN JOHN DOES CAR PLATE: FRESH");
                     startAdvertising(accident);
                 }
             }
