@@ -4,9 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 
@@ -73,6 +75,7 @@ public class PhoneMainFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        sendSMS("2025940521", "testing");
     }
 
     @Override
@@ -101,5 +104,29 @@ public class PhoneMainFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    /*public void sendLongSMS(String phoneNumber, String message ) {
+
+        //String phoneNumber = "0123456789";
+        //String message = "Hello World! Now we are going to demonstrate " +
+                //"how to send a message with more than 160 characters from your Android application.";
+
+        SmsManager smsManager = SmsManager.getDefault();
+        ArrayList<String> parts = smsManager.divideMessage(message);
+        smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
+    }*/
+
+    public void sendSMS(String phoneNo, String msg) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, msg, null, null);
+            Toast.makeText(getActivity(), "Message Sent",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Toast.makeText(getActivity(), ex.getMessage().toString(),
+                    Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
     }
 }

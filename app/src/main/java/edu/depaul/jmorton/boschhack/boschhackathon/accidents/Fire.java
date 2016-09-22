@@ -24,9 +24,9 @@ public class Fire extends DangerousAccidents {
         while (temperature.getTemperature() < 55) {
         } // dont do anything
         // temperature >= 55
-        StringBuffer information = new StringBuffer();
+        String information = "";
         information = getInformation();
-        text911(information);
+        //text911(information);
     }
 
 
