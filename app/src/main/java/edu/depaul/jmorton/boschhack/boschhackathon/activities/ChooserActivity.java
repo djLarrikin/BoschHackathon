@@ -6,9 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
-import edu.depaul.jmorton.boschhack.boschhackathon.fragments.PhoneMainFragment;
+import edu.depaul.jmorton.boschhack.boschhackathon.fragments.ChooserFragment;
 
-public class PhoneMainActivity extends BaseActivity {
+public class ChooserActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +21,11 @@ public class PhoneMainActivity extends BaseActivity {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
         if (fragment == null) {
-            fragment = PhoneMainFragment.newInstance();
+            fragment = ChooserFragment.newInstance();
             fm.beginTransaction()
                     .add(R.id.fragmentContainer, fragment)
                     .commit();
         }
+
     }
 }
