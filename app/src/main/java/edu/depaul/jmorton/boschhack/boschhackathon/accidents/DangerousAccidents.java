@@ -19,8 +19,7 @@ public abstract class DangerousAccidents {
         this.car = car;
     }
 
-
-    public StringBuffer getInformation(Location location) {
+    public String getInformation() {
         StringBuffer driverInfo = new StringBuffer();
 
 
@@ -34,14 +33,11 @@ public abstract class DangerousAccidents {
         driverInfo.append(person.getExtraInfo());
 
 
-        driverInfo.append("Car Information:\n");
-        driverInfo.append(car.getBrand() + car.getModel() + car.getColor() + "\n");
-        driverInfo.append(car.getPlate() + "Plate number ");
 
-        return driverInfo;
-    }
-
-    public void text911(StringBuffer information) {
-        // text information to 911
+        String information = driverInfo.toString();
+        return information;
     }
 }
+
+
+

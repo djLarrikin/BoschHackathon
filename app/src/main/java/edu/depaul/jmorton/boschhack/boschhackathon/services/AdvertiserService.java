@@ -49,6 +49,7 @@ public class AdvertiserService extends Service {
 
     @Override
     public void onCreate() {
+        L.d("Advertising service started");
         running = true;
         initialize();
         startAdvertising(Constants.SAFE);
@@ -95,6 +96,8 @@ public class AdvertiserService extends Service {
                 Toast.makeText(this, getString(R.string.bt_null), Toast.LENGTH_LONG).show();
             }
         }
+
+        L.d("Advertising service started");
 
     }
 
@@ -159,7 +162,6 @@ public class AdvertiserService extends Service {
          */
 
         AdvertiseData.Builder dataBuilder = new AdvertiseData.Builder();
-        dataBuilder.setIncludeDeviceName(true);
         dataBuilder.addServiceUuid(Constants.Service_UUID);
         dataBuilder.addServiceData(Constants.Service_UUID, accident.getBytes());
 
