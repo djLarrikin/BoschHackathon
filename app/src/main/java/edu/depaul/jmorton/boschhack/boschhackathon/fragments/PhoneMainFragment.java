@@ -200,11 +200,11 @@ public class PhoneMainFragment extends Fragment {
         if (status.contains(Constants.ACCIDENT_FIRE)) {
             binding.statusTextView.setText("THERES A FIRE");
             binding.getRoot().setBackgroundColor(Color.RED);
-            sendSMS("2025940521", "FIRE");
+            //sendSMS("", "FIRE");
         } else if (status.contains(Constants.ACCIDENT_ROLLOVER)) {
             binding.statusTextView.setText("THERES A ROLLOVER");
             binding.getRoot().setBackgroundColor(Color.BLUE);
-            sendSMS("2025940521", "ROLLOVER");
+            //sendSMS("", "ROLLOVER");
         } else {
             binding.statusTextView.setText("SAFE");
             binding.getRoot().setBackgroundColor(Color.WHITE);
