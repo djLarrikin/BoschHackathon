@@ -17,6 +17,7 @@ import edu.depaul.jmorton.boschhack.boschhackathon.R;
 import edu.depaul.jmorton.boschhack.boschhackathon.bluetooth.Constants;
 import edu.depaul.jmorton.boschhack.boschhackathon.receivers.AdvertiseFailureReceiver;
 import edu.depaul.jmorton.boschhack.boschhackathon.services.AdvertiserService;
+import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
 
 import static android.content.Context.SENSOR_SERVICE;
 
@@ -116,6 +117,7 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
             float axisX = Math.abs(event.values[0]);
             float axisY = Math.abs(event.values[1]);
             float axisZ = Math.abs(event.values[2]);
+            L.d("Axis X: " + axisX);
         }
         timestamp = event.timestamp;
     }
