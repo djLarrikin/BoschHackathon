@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.CoordinatorLayout
@@ -16,21 +15,21 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                style="@style/Toolbar"/>
+                style="@style/Toolbar" />
             <!-- Bug : http://stackoverflow.com/questions/30895579/coordinatorlayout-toolbar-invisible-on-enter-until-full-height -->
             <View
                 android:id="@+id/appbar_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@android:color/transparent"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

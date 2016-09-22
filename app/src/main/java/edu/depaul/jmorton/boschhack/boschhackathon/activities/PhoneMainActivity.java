@@ -2,25 +2,30 @@ package edu.depaul.jmorton.boschhack.boschhackathon.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
+import edu.depaul.jmorton.boschhack.boschhackathon.accidents.Fire;
 import edu.depaul.jmorton.boschhack.boschhackathon.fragments.PhoneMainFragment;
+import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
 
 public class PhoneMainActivity extends BaseActivity
         implements LocationListener {
 
-    //private TextView latituteField;
-    //private TextView longitudeField;
     private LocationManager locationManager;
     private String provider;
+    public int lat;
+    public int lng;
+
+    private Fire fire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,9 @@ public class PhoneMainActivity extends BaseActivity
                     .add(R.id.fragmentContainer, fragment)
                     .commit();
         }
+
+        fire = new Fire(null, null, null);
+        //fire.getInformation(location);
     }
 
     @Override
@@ -74,8 +82,8 @@ public class PhoneMainActivity extends BaseActivity
 
     @Override
     public void onLocationChanged(Location location) {
-        int lat = (int) (location.getLatitude());
-        int lng = (int) (location.getLongitude());
+        lat = (int) (location.getLatitude());
+        lng = (int) (location.getLongitude());
         L.d(String.valueOf(lat));
         L.d(String.valueOf(lng));
     }

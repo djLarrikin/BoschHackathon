@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    android:id="@+id/activity_chooser"
+<layout android:id="@+id/activity_chooser"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="edu.depaul.jmorton.boschhack.boschhackathon.activities.ChooserActivity">
@@ -19,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Choose a mode"
-            android:textAppearance="@android:style/TextAppearance.Material.Large"/>
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <LinearLayout
             android:id="@+id/xdkLinearLayout"
@@ -36,8 +35,7 @@
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackground"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/image_xdk"
-                />
+                android:src="@mipmap/image_xdk" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,8 +54,7 @@
                 android:layout_height="match_parent"
                 android:background="?android:attr/selectableItemBackground"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/image_nexus6p"
-                />
+                android:src="@mipmap/image_nexus6p" />
         </LinearLayout>
 
     </LinearLayout>
