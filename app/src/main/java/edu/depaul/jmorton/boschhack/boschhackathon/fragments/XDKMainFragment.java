@@ -3,6 +3,10 @@ package edu.depaul.jmorton.boschhack.boschhackathon.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,13 +17,21 @@ import edu.depaul.jmorton.boschhack.boschhackathon.R;
 import edu.depaul.jmorton.boschhack.boschhackathon.bluetooth.Constants;
 import edu.depaul.jmorton.boschhack.boschhackathon.receivers.AdvertiseFailureReceiver;
 import edu.depaul.jmorton.boschhack.boschhackathon.services.AdvertiserService;
+import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
+
+import static android.content.Context.SENSOR_SERVICE;
 
 /**
  * Fragment representing the XDK, will advertise different accident events.
  */
-public class XDKMainFragment extends Fragment {
+public class XDKMainFragment extends Fragment implements SensorEventListener {
 
     private AdvertiseFailureReceiver advertisingFailureReceiver;
+    private SensorManager mSensorManager;
+    private Sensor gyroSensor;
+    private static final float NS2S = 1.0f / 1000000000.0f; // Create a constant to convert nanoseconds to seconds.
+    private final float[] deltaRotationVector = new float[4];
+    private float timestamp;
 
     public XDKMainFragment() {
         // Required empty public constructor
@@ -34,6 +46,11 @@ public class XDKMainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         advertisingFailureReceiver = new AdvertiseFailureReceiver();
         startAdvertising(Constants.SAFE);
+
+        mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+        gyroSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        gyroSensor.toString();
+        mSensorManager.registerListener(this, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -52,6 +69,8 @@ public class XDKMainFragment extends Fragment {
             startAdvertising(Constants.SAFE);
             getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
         }
+
+
     }
 
     @Override
@@ -88,5 +107,25 @@ public class XDKMainFragment extends Fragment {
     private void stopAdvertising() {
         Context c = getActivity();
         c.stopService(getServiceIntent(c, Constants.SAFE));
+    }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+        if (timestamp != 0) {
+            final float dT = (event.timestamp - timestamp) * NS2S;
+            // Axis of the rotation sample, not normalized yet.
+            float axisX = Math.abs(event.values[0]);
+            float axisY = Math.abs(event.values[1]);
+            float axisZ = Math.abs(event.values[2]);
+            L.d("\nAxis X: " + axisX + "\nAxis Y: " + axisY + "\nAxis Z: " + axisZ);
+        }
+        timestamp = event.timestamp;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//        do nothing
     }
 }
