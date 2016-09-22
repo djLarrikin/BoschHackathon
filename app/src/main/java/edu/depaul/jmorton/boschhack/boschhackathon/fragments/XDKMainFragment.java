@@ -48,9 +48,9 @@ public class XDKMainFragment extends Fragment {
         super.onResume();
 
         IntentFilter failureFilter = new IntentFilter(AdvertiserService.ADVERTISING_FAILED);
-        getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
         if (!AdvertiserService.running) {
             startAdvertising(Constants.SAFE);
+            getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
         }
     }
 
