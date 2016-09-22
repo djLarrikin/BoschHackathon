@@ -1,13 +1,19 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="edu.depaul.jmorton.boschhack.boschhackathon.fragments.PhoneMainFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/statusTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:text="Status: "
+        android:textAppearance="@android:style/TextAppearance.Material.Large"/>
 
 </FrameLayout>
+</layout>

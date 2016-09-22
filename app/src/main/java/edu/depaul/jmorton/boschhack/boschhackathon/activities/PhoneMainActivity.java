@@ -1,6 +1,10 @@
 package edu.depaul.jmorton.boschhack.boschhackathon.activities;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -10,11 +14,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
 import android.widget.Toast;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 import edu.depaul.jmorton.boschhack.boschhackathon.accidents.Fire;
+import edu.depaul.jmorton.boschhack.boschhackathon.bluetooth.Constants;
 import edu.depaul.jmorton.boschhack.boschhackathon.fragments.PhoneMainFragment;
 import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
 
@@ -28,6 +32,8 @@ public class PhoneMainActivity extends BaseActivity
 
     private Fire fire;
 
+    private BluetoothAdapter mBluetoothAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,33 +42,59 @@ public class PhoneMainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.app_name);
 
+        fire = new Fire(null, null, null);
+        //fire.getInformation(location);
+
+        if (savedInstanceState == null) {
+
+            mBluetoothAdapter = ((BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE))
+                    .getAdapter();
+
+            // Is Bluetooth supported on this device?
+            if (mBluetoothAdapter != null) {
+
+                // Is Bluetooth turned on?
+                if (mBluetoothAdapter.isEnabled()) {
+
+                    // Are Bluetooth Advertisements supported on this device?
+                    if (mBluetoothAdapter.isMultipleAdvertisementSupported()) {
+
+                        // Everything is supported and enabled, load the fragments.
+                        setupFragments();
+
+                    } else {
+
+                        // Bluetooth Advertisements are not supported.
+                        //showErrorText(R.string.bt_ads_not_supported);
+                    }
+                } else {
+
+                    // Prompt user to turn on Bluetooth (logic continues in onActivityResult()).
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, Constants.REQUEST_ENABLE_BT);
+                }
+            } else {
+
+                // Bluetooth is not supported.
+                //showErrorText(R.string.bt_not_supported);
+            }
+        }
+    }
+
+    public void setupFragments() {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
         if (fragment == null) {
             fragment = PhoneMainFragment.newInstance();
+            PhoneMainFragment phoneFragment = (PhoneMainFragment) fragment;
+            phoneFragment.setBluetoothAdapter(mBluetoothAdapter);
             fm.beginTransaction()
                     .add(R.id.fragmentContainer, fragment)
                     .commit();
         }
-
-        fire = new Fire(null, null, null);
-        //fire.getInformation(location);
-
-        sendSMS("2025940521", "testing");
     }
 
-    public void sendSMS(String phoneNo, String msg) {
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNo, null, msg, null, null);
-            Toast.makeText(this, "Message Sent",
-                    Toast.LENGTH_LONG).show();
-        } catch (Exception ex) {
-            Toast.makeText(this, ex.getMessage().toString(),
-                    Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-        }
-    }
+
 
     @Override
     protected void onResume() {
@@ -77,7 +109,7 @@ public class PhoneMainActivity extends BaseActivity
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
+        //locationManager.requestLocationUpdates(provider, 400, 1, this);
     }
 
     @Override
