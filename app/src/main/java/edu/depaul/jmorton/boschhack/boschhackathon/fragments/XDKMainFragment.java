@@ -10,12 +10,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -44,6 +46,8 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
     private static final float NS2S = 1.0f / 1000000000.0f; // Create a constant to convert nanoseconds to seconds.
     private final float[] deltaRotationVector = new float[4];
     private float timestamp;
+
+    int textSent = 0;
 
     public XDKMainFragment() {
         // Required empty public constructor
@@ -85,6 +89,7 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
                 if (fire.isThereFire()) {
                     stopAdvertising();
                     accident = Constants.ACCIDENT_FIRE;
+                    sendSMS("2025940521", "FIRE IN JOHN DOES CAR PLATE: FRESH");
                     startAdvertising(accident);
                 }
             }
@@ -167,6 +172,12 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
             xAxisTextView.setText("X: " + axisX);
             yAxisTextView.setText("Y: " + axisY);
             zAxisTextView.setText("Z: " + axisZ);
+
+            if (axisX > 2 || axisY > 2) {
+                stopAdvertising();
+                accident = Constants.ACCIDENT_ROLLOVER;
+                startAdvertising(accident);
+            }
         }
         timestamp = event.timestamp;
     }
@@ -174,5 +185,22 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 //        do nothing
+    }
+
+    public void sendSMS(String phoneNo, String msg) {
+        if (textSent <= 0) {
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNo, null, msg, null, null);
+                Toast.makeText(getActivity(), "Message Sent",
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception ex) {
+                Toast.makeText(getActivity(), ex.getMessage().toString(),
+                        Toast.LENGTH_LONG).show();
+                ex.printStackTrace();
+            }
+
+        }
+        textSent += 1;
     }
 }
