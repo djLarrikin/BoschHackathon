@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
+import edu.depaul.jmorton.boschhack.boschhackathon.bluetooth.Constants;
 import edu.depaul.jmorton.boschhack.boschhackathon.receivers.AdvertiseFailureReceiver;
 import edu.depaul.jmorton.boschhack.boschhackathon.services.AdvertiserService;
 
@@ -32,7 +33,7 @@ public class XDKMainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         advertisingFailureReceiver = new AdvertiseFailureReceiver();
-        startAdvertising();
+        startAdvertising(Constants.SAFE);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class XDKMainFragment extends Fragment {
         IntentFilter failureFilter = new IntentFilter(AdvertiserService.ADVERTISING_FAILED);
         getActivity().registerReceiver(advertisingFailureReceiver, failureFilter);
         if (!AdvertiserService.running) {
-            startAdvertising();
+            startAdvertising(Constants.SAFE);
         }
     }
 
@@ -67,16 +68,18 @@ public class XDKMainFragment extends Fragment {
     /**
      * Returns Intent addressed to the {@code AdvertiserService} class.
      */
-    private static Intent getServiceIntent(Context c) {
-        return new Intent(c, AdvertiserService.class);
+    private static Intent getServiceIntent(Context c, String accident) {
+        Intent intent = new Intent(c, AdvertiserService.class);
+        intent.putExtra(Constants.ACCIDENT_TYPE, accident);
+        return intent;
     }
 
     /**
      * Starts BLE Advertising by starting {@code AdvertiserService}.
      */
-    private void startAdvertising() {
+    private void startAdvertising(String accident) {
         Context c = getActivity();
-        c.startService(getServiceIntent(c));
+        c.startService(getServiceIntent(c, accident));
     }
 
     /**
@@ -84,6 +87,6 @@ public class XDKMainFragment extends Fragment {
      */
     private void stopAdvertising() {
         Context c = getActivity();
-        c.stopService(getServiceIntent(c));
+        c.stopService(getServiceIntent(c, Constants.SAFE));
     }
 }

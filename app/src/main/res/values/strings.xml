@@ -14,4 +14,5 @@
     <string name="advertising_timedout">Advertising stopped due to timeout.</string>
 
     <string name="bt_null">Error: Bluetooth object null</string>
+
 </resources>
