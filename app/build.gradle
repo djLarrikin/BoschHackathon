@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
@@ -29,7 +33,7 @@ dependencies {
 //    compile 'com.android.support:recyclerview-v7:24.2.0'
 //    compile 'com.android.support:preference-v7:24.2.0'
 //    compile 'com.android.support:preference-v14:24.2.0'
-//    compile 'com.android.support:percent:24.2.0'
+    compile 'com.android.support:percent:24.2.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
@@ -39,4 +43,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    compile 'javax.inject:javax.inject:1'
 }
