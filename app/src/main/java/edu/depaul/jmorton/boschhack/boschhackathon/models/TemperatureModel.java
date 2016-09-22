@@ -8,6 +8,14 @@ public class TemperatureModel {
 
     private long temperature;
 
+    public TemperatureModel() {
+        this.temperature = 55;
+    }
+
+    public TemperatureModel(long temperature) {
+        this.temperature = temperature;
+    }
+
     public void setTemperature(long temperature) {
         this.temperature = temperature;
     }
