@@ -3,6 +3,7 @@ package edu.depaul.jmorton.boschhack.boschhackathon.services;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.AdvertiseCallback;
 import android.bluetooth.le.AdvertiseData;
 import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
@@ -123,7 +124,7 @@ public class AdvertiserService extends Service {
         if (advertiseCallback == null) {
             AdvertiseSettings settings = buildAdvertiseSettings();
             AdvertiseData data = buildAdvertiseData(accidentType);
-            advertiseCallback = new AdvertiseCallback();
+            advertiseCallback = new XDKAdvertiseCallback();
 
             if (bluetoothLeAdvertiser != null) {
                 bluetoothLeAdvertiser.startAdvertising(settings, data,
@@ -186,7 +187,7 @@ public class AdvertiserService extends Service {
      * Custom callback after Advertising succeeds or fails to start. Broadcasts the error code
      * in an Intent to be picked up by AdvertiserFragment and stops this Service.
      */
-    private class AdvertiseCallback extends android.bluetooth.le.AdvertiseCallback {
+    private class XDKAdvertiseCallback extends AdvertiseCallback {
 
         @Override
         public void onStartFailure(int errorCode) {
@@ -204,7 +205,7 @@ public class AdvertiserService extends Service {
             L.d("Advertising successfully started");
         }
 
-        public AdvertiseCallback() {
+        public XDKAdvertiseCallback() {
             super();
         }
     }
