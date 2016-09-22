@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
+import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
 
 public abstract class PhoneMainActivity extends BaseActivity
         implements LocationListener {
@@ -52,8 +53,8 @@ public abstract class PhoneMainActivity extends BaseActivity
             System.out.println("Provider " + provider + " has been selected.");
             onLocationChanged(location);
         } else {
-            latituteField.setText("Location not available");
-            longitudeField.setText("Location not available");
+            L.d("Location not available");
+            L.d("Location not available");
         }
     }
 
@@ -93,8 +94,8 @@ public abstract class PhoneMainActivity extends BaseActivity
     public void onLocationChanged(Location location) {
         int lat = (int) (location.getLatitude());
         int lng = (int) (location.getLongitude());
-        latituteField.setText(String.valueOf(lat));
-        longitudeField.setText(String.valueOf(lng));
+        L.d(String.valueOf(lat));
+        L.d(String.valueOf(lng));
     }
 
     @Override
