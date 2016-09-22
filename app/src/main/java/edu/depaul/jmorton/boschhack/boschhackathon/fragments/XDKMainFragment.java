@@ -119,7 +119,8 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
             float axisX = Math.abs(event.values[0]);
             float axisY = Math.abs(event.values[1]);
             float axisZ = Math.abs(event.values[2]);
-            L.d("\nAxis X: " + axisX + "\nAxis Y: " + axisY + "\nAxis Z: " + axisZ);
+
+            L.d("\nAxis X: " + deltaRotationVector[0] + "\nAxis Y: " + deltaRotationVector[1] + "\nAxis Z: " + deltaRotationVector[2]);
         }
         timestamp = event.timestamp;
     }
