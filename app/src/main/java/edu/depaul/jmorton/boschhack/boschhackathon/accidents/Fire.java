@@ -16,18 +16,15 @@ public class Fire extends DangerousAccidents {
 
     public Fire(TemperatureModel temperature, PersonModel person, CarModel car) {
         super(person, car);
-        checkTemperature(temperature);
     }
 
 
-    public void checkTemperature(TemperatureModel temperature) {
-        while (temperature.getTemperature() < 55) {
-        } // dont do anything
-        // temperature >= 55
-        String information = "";
-        information = getInformation();
-        //text911(information);
+    public boolean isThereFire(TemperatureModel temperature) {
+        if (temperature.getTemperature() < 55) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
-
-
 }
