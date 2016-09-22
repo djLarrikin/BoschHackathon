@@ -49,6 +49,8 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
 
         mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
         gyroSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        gyroSensor.toString();
+        mSensorManager.registerListener(this, gyroSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -117,7 +119,7 @@ public class XDKMainFragment extends Fragment implements SensorEventListener {
             float axisX = Math.abs(event.values[0]);
             float axisY = Math.abs(event.values[1]);
             float axisZ = Math.abs(event.values[2]);
-            L.d("Axis X: " + axisX);
+            L.d("\nAxis X: " + axisX + "\nAxis Y: " + axisY + "\nAxis Z: " + axisZ);
         }
         timestamp = event.timestamp;
     }
