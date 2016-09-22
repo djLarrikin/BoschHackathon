@@ -8,17 +8,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 import edu.depaul.jmorton.boschhack.boschhackathon.utils.L;
 
-public abstract class PhoneMainActivity extends BaseActivity
+public class PhoneMainActivity extends BaseActivity
         implements LocationListener {
 
-    private TextView latituteField;
-    private TextView longitudeField;
+    //private TextView latituteField;
+    //private TextView longitudeField;
     private LocationManager locationManager;
     private String provider;
 
