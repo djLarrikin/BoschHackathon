@@ -9,6 +9,7 @@ import android.bluetooth.le.AdvertiseSettings;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
@@ -42,18 +43,30 @@ public class AdvertiserService extends Service {
     private Handler handler;
     private Runnable timeoutRunnable;
 
+    private String accident = Constants.SAFE;
+
     /**
      * Length of time to allow advertising before automatically shutting off. (10 minutes)
      */
     private long TIMEOUT = TimeUnit.MILLISECONDS.convert(10, TimeUnit.MINUTES);
 
     @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Bundle bundle = intent.getExtras();
+        accident = bundle.getString(Constants.ACCIDENT_TYPE);
+        startAdvertising(accident);
+        setTimeout();
+
+        return super.onStartCommand(intent, flags, startId);
+
+    }
+
+    @Override
     public void onCreate() {
         L.d("Advertising service started");
         running = true;
         initialize();
-        startAdvertising(Constants.SAFE);
-        setTimeout();
+
         super.onCreate();
     }
 
@@ -122,7 +135,7 @@ public class AdvertiserService extends Service {
      * Starts BLE Advertising.
      */
     private void startAdvertising(String accidentType) {
-        L.d("Service: Starting Advertising");
+        L.d("Service: Starting Advertising: type: " + accidentType);
 
         if (advertiseCallback == null) {
             AdvertiseSettings settings = buildAdvertiseSettings();

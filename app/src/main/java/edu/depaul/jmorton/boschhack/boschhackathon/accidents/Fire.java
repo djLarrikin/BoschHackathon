@@ -16,15 +16,24 @@ public class Fire extends DangerousAccidents {
 
     public Fire(TemperatureModel temperature, PersonModel person, CarModel car) {
         super(person, car);
+        this.temperature = temperature;
     }
 
 
-    public boolean isThereFire(TemperatureModel temperature) {
-        if (temperature.getTemperature() < 55) {
-            return false;
-        } else {
+    public boolean isThereFire() {
+        if (temperature.getTemperature() > 55) {
             return true;
+        } else {
+            return false;
         }
+    }
 
+
+    public TemperatureModel getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(long temperatureDegrees) {
+        temperature.setTemperature(temperatureDegrees);
     }
 }

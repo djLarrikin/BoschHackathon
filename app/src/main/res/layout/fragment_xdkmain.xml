@@ -14,6 +14,13 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/safeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Reset to Safe"/>
+
         <LinearLayout
             android:id="@+id/rolloverLinearLayout"
             android:layout_width="match_parent"
