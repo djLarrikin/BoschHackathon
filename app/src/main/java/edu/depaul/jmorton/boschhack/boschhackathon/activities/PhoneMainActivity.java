@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
+import android.widget.Toast;
 
 import edu.depaul.jmorton.boschhack.boschhackathon.R;
 import edu.depaul.jmorton.boschhack.boschhackathon.fragments.PhoneMainFragment;
