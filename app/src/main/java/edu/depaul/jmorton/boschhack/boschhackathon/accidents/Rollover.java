@@ -23,9 +23,9 @@ public class Rollover extends DangerousAccidents {
 //      suppose when the car accident happened the rate of rotation is lager than 180 degree per second (pi/2)
         while ((gyroscope.getAxisX() < 1.57) && (gyroscope.getAxisY() < 1.57) && (gyroscope.getAxisZ() < 1.57)) {
         }
-        StringBuffer information = new StringBuffer();
+        String information = "";
         information = getInformation();
-        text911(information);
+        //text911(information);
 
     }
 
